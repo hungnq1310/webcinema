@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 
 // const Person = (props) => {
 //   return (
@@ -28,6 +28,13 @@ const App = () => {
 
   // not is not recommended to use this
   // <button onClick={() => setCount(counter-1)}>-</ button>
+
+  //use effect
+  useEffect(() => {
+    // BIGGEST MISTAKE => never update the state manually
+    // counter = 100;
+    setCount(100);
+  }, []); // dependency array
 
   return (
     <div className="App">
