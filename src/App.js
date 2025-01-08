@@ -15,6 +15,10 @@ const App = () => {
         const response = await fetch(`${API_URL}&s=${title}`); // query parameter
         const data = await response.json();
         console.log(data);
+        if (data.Response === "False") {
+            setSearchResults([]);
+            return;
+        }
         setSearchResults(data.Search);
     }
 
@@ -24,14 +28,18 @@ const App = () => {
 
     // map result to MovieCart component
     const movies = () => {
-        return searchResults.map((movie, index) => {
-            return <MovieCart
-            key={index} 
-            title={movie.Title}
-            year={movie.Year}
-            poster={movie.Poster}
-            />
-        });
+        return (
+            (searchResults.length > 0) ? (
+                searchResults.map((movie, index) => {
+                    return <MovieCart
+                    key={index} 
+                    title={movie.Title}
+                    year={movie.Year}
+                    poster={movie.Poster}
+                    />
+                })
+            ) : <h2>No movies found</h2>
+        ) 
     }
 
     return (
@@ -51,9 +59,7 @@ const App = () => {
                 ></img>
             </div>
             <div className="container">
-                {(searchResults.length > 0) ? (
-                    movies()
-                ) : <h2>No movies found</h2>}
+                { movies() }
             </div>
         </div>
     )
