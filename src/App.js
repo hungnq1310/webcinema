@@ -18,7 +18,32 @@ const App = () => {
         searchMovies("Batman");
     }, []);
 
-    return <div>My App</div>;
+    return (
+        <div className="app">
+            <h1>Movie App</h1>
+            <div className="search">
+                <input type="text" placeholder="Search for movies" onChange={
+                    // () => {console.log("Changed")} // change based on each character
+                    () => {}
+                }/>
+                <img 
+                    src={searchIcon}
+                    alt="search"
+                    onClick={() => {console.log("Clicked")}}
+                ></img>
+                
+            </div>
+            <div className="container">
+                <div className="movie">
+                    <img src="https://via.placeholder.com/150" alt="movie"></img>
+                    <div className="movie-info">
+                        <h3>Movie Title</h3>
+                        <span>Movie Year</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default App;
