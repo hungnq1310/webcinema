@@ -8,6 +8,7 @@ import searchIcon from "./search.svg";
 const API_URL = "http://www.omdbapi.com?apikey=" + process.env.REACT_APP_API_KEY;
 
 const App = () => {
+    const [textSearch, setTextSearch] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
     const searchMovies = async (title) => {
@@ -18,7 +19,7 @@ const App = () => {
     }
 
     useEffect(() => {
-        searchMovies("Batman");
+        searchMovies("all");
     }, []);
 
     // map result to MovieCart component
@@ -39,12 +40,14 @@ const App = () => {
             <div className="search">
                 <input type="text" placeholder="Search for movies" onChange={
                     // () => {console.log("Changed")} // change based on each character
-                    () => {}
+                    (event) => {setTextSearch(event.target.value)}
                 }/>
                 <img 
                     src={searchIcon}
                     alt="search"
-                    onClick={() => {}}
+                    onClick={() => {
+                        searchMovies(textSearch);
+                    }}
                 ></img>
             </div>
             <div className="container">
