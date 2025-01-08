@@ -1,22 +1,36 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css";
+import MovieCart from "./components/MovieCart";
 import searchIcon from "./search.svg";
 
 const API_URL = "http://www.omdbapi.com?apikey=" + process.env.REACT_APP_API_KEY;
 
 const App = () => {
+    const [searchResults, setSearchResults] = useState([]);
 
     const searchMovies = async (title) => {
         const response = await fetch(`${API_URL}&s=${title}`); // query parameter
         const data = await response.json();
         console.log(data);
+        setSearchResults(data.Search);
     }
 
     useEffect(() => {
         searchMovies("Batman");
     }, []);
+
+    // map result to MovieCart component
+    const movies = () => {
+        searchResults.map((movie) => {
+            return <MovieCart 
+            title={movie.Title}
+            year={movie.Year}
+            poster={movie.Poster}
+            />
+        });
+    }
 
     return (
         <div className="app">
@@ -29,18 +43,11 @@ const App = () => {
                 <img 
                     src={searchIcon}
                     alt="search"
-                    onClick={() => {console.log("Clicked")}}
+                    onClick={() => {}}
                 ></img>
-                
             </div>
             <div className="container">
-                <div className="movie">
-                    <img src="https://via.placeholder.com/150" alt="movie"></img>
-                    <div className="movie-info">
-                        <h3>Movie Title</h3>
-                        <span>Movie Year</span>
-                    </div>
-                </div>
+                {(movies.length > 0) ? movies : <h2>No movies found</h2>}
             </div>
         </div>
     )
