@@ -23,8 +23,9 @@ const App = () => {
 
     // map result to MovieCart component
     const movies = () => {
-        searchResults.map((movie) => {
-            return <MovieCart 
+        return searchResults.map((movie, index) => {
+            return <MovieCart
+            key={index} 
             title={movie.Title}
             year={movie.Year}
             poster={movie.Poster}
@@ -47,7 +48,9 @@ const App = () => {
                 ></img>
             </div>
             <div className="container">
-                {(movies.length > 0) ? movies : <h2>No movies found</h2>}
+                {(searchResults.length > 0) ? (
+                    movies()
+                ) : <h2>No movies found</h2>}
             </div>
         </div>
     )
